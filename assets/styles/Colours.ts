@@ -2,6 +2,9 @@ export const Colours = {
     white: {
         s100: '#FFFFFF'
     },
+    black: {
+        s100: '#000000',
+    },
     yellow: {
         s10: '#FFFAE5',
         s20: '#FFF5CC',
