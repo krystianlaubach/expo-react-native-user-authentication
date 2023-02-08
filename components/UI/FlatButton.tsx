@@ -31,6 +31,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: Colours.blue.s100,
         fontSize: 16,
-        fontWeight: 'bold'
     },
 });

@@ -1,15 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 
-type Props = {
-
-};
-
-export default function WelcomeScreen({}: Props): JSX.Element {
+export default function WelcomeScreen(): JSX.Element {
     return (
-        <View style={ styles.rootContainer }>
+        <ScrollView contentContainerStyle={ styles.rootContainer }>
             <Text style={ styles.title }>Welcome!</Text>
             <Text>You authenticated successfully!</Text>
-        </View>
+        </ScrollView>
     );
 }
 
