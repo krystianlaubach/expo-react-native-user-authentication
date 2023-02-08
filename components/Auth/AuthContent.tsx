@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { Colours } from '../../assets/styles/Colours';
+import { useNavigation } from '@react-navigation/native';
 import FlatButton from '../UI/FlatButton';
 import AuthForm, { AuthDataType, CredentialsInvalidType } from './AuthForm';
 
@@ -22,8 +23,14 @@ export default function AuthContent({ isLogin = false, onAuthenticate }: Props):
         passwordsDontMatch: false,
     });
 
+    const navigation = useNavigation<any>();
+
     const switchAuthModeHandler = (): void => {
-        // Todo
+        if (isLogin) {
+            navigation.replace('Signup');
+        } else {
+            navigation.replace('Login');
+        }
     };
 
     const submitHandler = (authData: AuthDataType): void => {
@@ -33,7 +40,7 @@ export default function AuthContent({ isLogin = false, onAuthenticate }: Props):
         password = password.trim();
 
         const emailIsValid = email.includes('@');
-        const passwordIsValid = password.length > 6;
+        const passwordIsValid = password.length > 0;
         const emailsAreEqual = email === confirmEmail;
         const passwordsAreEqual = password === confirmPassword;
 
@@ -67,7 +74,7 @@ export default function AuthContent({ isLogin = false, onAuthenticate }: Props):
                 credentialsInvalid={ credentialsInvalid }
             />
             <View style={ styles.buttons }>
-                <FlatButton onPress={ switchAuthModeHandler }>{ isLogin ? 'Create a new user' : 'Log in' }</FlatButton>
+                <FlatButton onPress={ switchAuthModeHandler }>{ isLogin ? 'Create a new user' : 'Have an account? Log in.' }</FlatButton>
             </View>
         </View>
     );
