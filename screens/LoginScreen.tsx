@@ -2,21 +2,25 @@ import { useState } from 'react';
 import { Alert, ScrollView, StyleSheet } from 'react-native';
 import { signIn, UserAuthenticationResponse, FirebaseErrorResponseData, FIREBASE_ERRORS, FIREBASE_ERROR_MESSAGES } from '../services/HttpRequestHandler';
 import { AxiosError } from 'axios';
+import { useDispatch } from 'react-redux';
+import { authenticate } from '../redux/authSlice';
 import AuthContent, { CredentialsType } from '../components/Auth/AuthContent';
 import LoadingOverlay from '../components/UI/LoadingOverlay';
 
-type Props = {
-
-};
-
-export default function LoginScreen({}: Props): JSX.Element {
+export default function LoginScreen(): JSX.Element {
     const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
+
+    const dispatch = useDispatch();
 
     const signupHandler = async (credentials: CredentialsType): Promise<void> => {
         setIsAuthenticating(true);
 
         await signIn(credentials.email, credentials.password)
-            .then((response: UserAuthenticationResponse) => {
+            .then((userData: UserAuthenticationResponse) => {
+                dispatch(authenticate({
+                    token: userData.idToken,
+                }));
+
                 setIsAuthenticating(false);
             })
             .catch((error: AxiosError) => {

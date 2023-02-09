@@ -4,6 +4,7 @@ const API_URL = 'https://identitytoolkit.googleapis.com/v1/';
 const SIGN_UP_PATH = 'accounts:signUp?key=';
 const SIGN_IN_PATH = 'accounts:signInWithPassword?key=';
 const API_KEY = 'AIzaSyANbsHXDfWD_ZCByEWz_ns0xtdwjxmvOM8'
+const GET_MESSAGE_URL = 'https://react-native-course-user-auth-default-rtdb.europe-west1.firebasedatabase.app/message.json?auth=';
 
 export type UserAuthenticationResponse = {
     displayName?: string
@@ -70,6 +71,20 @@ export async function signIn(email: string, password: string): Promise<UserAuthe
             password: password,
             returnSecureToken: true,
         },
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json',
+            },
+        }
+    );
+
+    return response.data;
+}
+
+export async function getMessage(userToken: string): Promise<string> {
+    const response = await axios.get(
+        GET_MESSAGE_URL + userToken,
         {
             headers: {
                 'Accept': 'application/json',
